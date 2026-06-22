@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Eric Li | NBA Elite HQ</title>
+
+  <style>
+
+    :root{
+
+      --bg:#050a14;
+
+      --panel:#0b1324;
+
+      --panel-2:rgba(255,255,255,.05);
+
+      --line:rgba(255,255,255,.09);
+
+      --text:#eef4ff;
+
+      --muted:#9aaecb;
+
+      --blue:#2563eb;
+
+      --red:#dc2626;
+
+      --orange:#f97316;
+
+      --gold:#fbbf24;
+
+      --green:#22c55e;
+
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+
+      --radius:24px;
+
+      --max:1360px;
+
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+
+      margin:0;
+
+      font-family:"Segoe UI",Inter,Arial,sans-serif;
+
+      color:var(--text);
+
+      background:
+
+        radial-gradient(circle at 12% 10%, rgba(37,99,235,.16), transparent 18%),
+
+        radial-gradient(circle at 88% 12%, rgba(220,38,38,.14), transparent 20%),
+
+        linear-gradient(180deg, #03070f 0%, #07101f 100%);
+
+      overflow-x:hidden;
+
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    img{display:block;max-width:100%}
+
+    button,input,select{font:inherit}
+
+    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+
+ 
+
+    .topbar{
+
+      position:sticky;top:0;z-index:100;
+
+      background:rgba(3,8,18,.82);
+
+      backdrop-filter:blur(14px);
+
+      border-bottom:1px solid var(--line);
+
+    }
+
+    .topbar-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+
+    .brand{display:flex;align-items:center;gap:14px;font-weight:900;letter-spacing:.2px}
+
+    .brand-badge{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--red));box-shadow:0 10px 30px rgba(37,99,235,.26);font-size:22px}
+
+    .brand small{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+
+ 
+
+    .nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+    .nav-btn{
+
+      border:none;background:transparent;color:#dfe8f8;padding:11px 15px;border-radius:999px;
+
+      font-weight:800;cursor:pointer;transition:.22s ease
+
+    }
+
+    .nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,.08);transform:translateY(-1px)}
+
+    .cta{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:none;border-radius:999px;background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;font-weight:900;cursor:pointer;box-shadow:0 12px 28px rgba(220,38,38,.22);transition:.22s ease}
+
+    .cta:hover{transform:translateY(-2px)}
+
+ 
+
+    .ticker-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:rgba(255,255,255,.03)}
+
+    .ticker{display:inline-flex;gap:34px;min-width:100%;padding:12px 0;white-space:nowrap;animation:ticker 28s linear infinite}
+
+    .ticker:hover{animation-play-state:paused}
+
+    .ticker-item{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:800;color:#e1ebf8}
+
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--orange);box-shadow:0 0 12px rgba(249,115,22,.75)}
+
+    @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+ 
+
+    main{padding:22px 0 24px}
+
+    .page{display:none;animation:fade .35s ease}
+
+    .page.active{display:block}
+
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+ 
+
+    .grid-hero{display:grid;grid-template-columns:1.35fr .95fr;gap:20px}
+
+    .glass,.panel{
+
+      position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;
+
+      background:linear-gradient(180deg, rgba(10,18,34,.96), rgba(10,18,34,.78));box-shadow:var(--shadow)
+
+    }
+
+    .hero-main{padding:34px;min-height:560px;display:flex;flex-direction:column;justify-content:center;isolation:isolate}
+
+    .eyebrow{display:inline-flex;gap:10px;align-items:center;color:#fed8aa;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+
+    .hero-main h1{font-size:clamp(40px,5vw,76px);line-height:1.02;margin:0 0 14px;max-width:11ch}
+
+    .hero-main p{font-size:18px;line-height:1.75;color:#d5deed;max-width:64ch;margin:0 0 24px}
+
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+
+    .ghost{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e8effd;font-weight:900;cursor:pointer;transition:.22s ease}
+
+    .ghost:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+
+    .hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+
+    .hero-stat{padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:.24s ease}
+
+    .hero-stat:hover{transform:translateY(-4px);background:rgba(255,255,255,.08);border-color:rgba(251,191,36,.3)}
+
+    .hero-stat strong{display:block;font-size:24px;margin-bottom:6px}
+
+    .hero-stat span{font-size:13px;color:var(--muted)}
+
+    .orb{position:absolute;border-radius:50%;filter:blur(30px);opacity:.18;z-index:-1;animation:float 8s ease-in-out infinite}
+
+    .orb.one{width:260px;height:260px;top:-74px;left:-50px;background:#3b82f6}
+
+    .orb.two{width:220px;height:220px;right:8%;bottom:-50px;background:#ef4444;animation-delay:1.4s}
+
+    @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-18px) translateX(8px)}}
+
+    .ball{position:absolute;right:46px;top:42px;width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#fb923c,#ea580c);box-shadow:inset -8px -14px 22px rgba(0,0,0,.22),0 16px 28px rgba(249,115,22,.22);animation:bounce 2.7s ease-in-out infinite}
+
+    .ball::before,.ball::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(48,28,8,.62);clip-path:inset(0 40% 0 40%)}
+
+    .ball::after{transform:rotate(90deg)}
+
+    .ball span,.ball i{position:absolute;inset:0;border-radius:50%;border-top:2px solid rgba(48,28,8,.62);border-bottom:2px solid rgba(48,28,8,.62);transform:rotate(28deg)}
+
+    .ball i{transform:rotate(-28deg)}
+
+    @keyframes bounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(10deg)}}
+
+    .runner{position:absolute;bottom:0;left:-12%;height:220px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.34));animation:drive 14s linear infinite}
+
+    @keyframes drive{0%{left:-12%;transform:translateY(0) scale(.96)}50%{transform:translateY(-8px) scale(1)}100%{left:100%;transform:translateY(0) scale(.96)}}
+
+ 
+
+    .side-stack{padding:20px;display:grid;gap:16px;align-content:start}
+
+    .mini-spot{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center;padding:18px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.24s ease}
+
+    .mini-spot:hover{transform:translateY(-4px);background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.06));box-shadow:0 18px 28px rgba(0,0,0,.24)}
+
+    .mini-spot img{width:92px;height:92px;object-fit:cover;object-position:center top;border-radius:18px;background:#0f172a;border:1px solid rgba(255,255,255,.1)}
+
+ 
+
+    .section{padding:22px 0 10px}
+
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+
+    .section-head h2{margin:0;font-size:30px}
+
+    .section-head p{margin:6px 0 0;color:var(--muted)}
+
+    .label{display:inline-flex;width:fit-content;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#93c5fd}
+
+ 
+
+    .home-grid{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:18px}
+
+    .video-card{position:relative;min-height:320px;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);background:#0f172a;cursor:pointer;transition:.24s ease}
+
+    .video-card:hover{transform:translateY(-6px)}
+
+    .video-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:saturate(1.05) contrast(1.02)}
+
+    .video-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,.1), rgba(2,6,23,.87) 78%)}
+
+    .play{position:absolute;top:22px;left:22px;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(10px);font-size:22px}
+
+    .video-copy{position:absolute;left:22px;right:22px;bottom:20px;z-index:2}
+
+    .video-copy h3{margin:12px 0 8px;font-size:28px;line-height:1.08;max-width:15ch}
+
+    .video-copy p{margin:0;color:#dce4f2;line-height:1.65;max-width:42ch}
+
+    .video-meta{display:flex;justify-content:space-between;gap:12px;color:#cad4e7;font-size:13px;font-weight:700;margin-top:14px}
+
+ 
+
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    .filter-btn,.chip-btn{
+
+      padding:10px 14px;border:none;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+
+      color:#e6edf8;font-weight:800;cursor:pointer;transition:.22s ease
+
+    }
+
+    .filter-btn:hover,.filter-btn.active,.chip-btn:hover,.chip-btn.active{background:linear-gradient(135deg, rgba(37,99,235,.36), rgba(220,38,38,.22));transform:translateY(-1px)}
+
+    .search{
+
+      min-width:260px;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.1);outline:none;
+
+      background:rgba(255,255,255,.05);color:var(--text)
+
+    }
+
+ 
+
+    .cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+
+    .cards-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+
+ 
+
+    .team-card,.player-card,.trade-card,.stat-card,.game-card{
+
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+
+      border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:var(--shadow);transition:.24s ease
+
+    }
+
+    .team-card:hover,.player-card:hover,.trade-card:hover,.stat-card:hover,.game-card:hover{transform:translateY(-6px)}
+
+ 
+
+    .team-card{padding:20px;overflow:hidden}
+
+    .team-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+
+    .team-head img{width:50px;height:50px;object-fit:contain;border-radius:50%;background:#fff;padding:2px}
+
+    .team-card h3{margin:0;font-size:22px}
+
+    .team-card p{margin:0 0 14px;color:#d4deee;line-height:1.65}
+
+    .roster-strip{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+    .roster-strip img{width:52px;height:52px;border-radius:14px;object-fit:cover;object-position:center top;border:1px solid rgba(255,255,255,.1);background:#0f172a}
+
+    .chip{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;font-weight:800;color:#dce6f6}
+
+ 
+
+    .player-card{padding:16px;display:grid;grid-template-columns:110px 1fr;gap:15px;align-items:center}
+
+    .player-card img{width:110px;height:110px;border-radius:18px;object-fit:cover;object-position:center top;background:#0f172a}
+
+    .player-name{font-weight:900;font-size:22px;margin:0 0 6px}
+
+    .player-sub{color:#93c5fd;font-size:13px;font-weight:900;margin-bottom:10px}
+
+    .statline{display:flex;gap:10px;flex-wrap:wrap}
+
+    .statline span{padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:13px;font-weight:900}
+
+ 
+
+    .layout-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+
+    .panel{padding:22px}
+
+    .table-wrap{overflow:auto}
+
+    table{width:100%;border-collapse:collapse;font-size:14px}
+
+    th,td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+
+    th{font-size:12px;text-transform:uppercase;letter-spacing:.9px;color:#cbd6ea}
+
+    tbody tr:hover td{background:rgba(255,255,255,.04)}
+
+    .team-cell{display:flex;align-items:center;gap:12px;font-weight:900}
+
+    .team-cell img,.team-mini img{width:28px;height:28px;object-fit:contain;border-radius:50%;background:#fff;padding:2px}
+
+    .up{color:var(--green);font-weight:900}
+
+ 
+
+    .schedule-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+    .game-card{padding:16px;border-radius:20px}
+
+    .teams-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+    .team-mini{display:flex;align-items:center;gap:10px;font-weight:900}
+
+    .score{font-size:19px;font-weight:900}
+
+    .game-sub{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:13px;margin-top:10px}
+
+ 
+
+    .trade-card{padding:20px}
+
+    .trade-card h3{margin:10px 0 8px;font-size:24px}
+
+    .trade-card p{margin:0 0 14px;color:#d8e1ef;line-height:1.7}
+
+    .trade-score{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-weight:900}
+
+    .bar{width:100px;height:8px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden}
+
+    .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--red))}
+
+ 
+
+    footer{border-top:1px solid var(--line);background:rgba(255,255,255,.03);margin-top:14px}
+
+    .footer-inner{padding:22px 0 30px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap;color:#d3dcef;font-size:14px}
+
+    .muted{color:var(--muted)}
+
+ 
+
+    @media (max-width:1150px){
+
+      .grid-hero,.home-grid,.cards-3,.layout-2,.schedule-grid{grid-template-columns:1fr}
+
+      .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+      .runner{display:none}
+
+    }
+
+    @media (max-width:760px){
+
+      .topbar-inner{padding:10px 0;align-items:flex-start}
+
+      .nav{width:100%}
+
+      .hero-main{padding:24px;min-height:auto}
+
+      .hero-main h1{max-width:none}
+
+      .hero-main p{font-size:16px}
+
+      .hero-stats,.cards-2{grid-template-columns:1fr}
+
+      .player-card{grid-template-columns:1fr}
+
+      .player-card img{width:100%;height:220px}
+
+      .ball{width:66px;height:66px;right:16px;top:15px}
+
+    }
+
+ 
+
+    .game-shell{display:grid;grid-template-columns:1.22fr .78fr;gap:18px;align-items:start}
+
+    .game-stage{padding:0;overflow:hidden}
+
+    .game-topbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03))}
+
+    .game-hud{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    .hud-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:14px;font-weight:900;color:#eef4ff}
+
+    .hud-chip strong{font-size:20px;line-height:1}
+
+    .hud-chip.good{background:linear-gradient(135deg, rgba(34,197,94,.22), rgba(59,130,246,.16));border-color:rgba(34,197,94,.35)}
+
+    .game-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    .game-btn{padding:12px 16px;border:none;border-radius:14px;background:linear-gradient(135deg, rgba(37,99,235,.92), rgba(220,38,38,.72));color:#fff;font-weight:900;cursor:pointer;box-shadow:0 12px 28px rgba(37,99,235,.18);transition:.22s ease}
+
+    .game-btn:hover{transform:translateY(-2px)}
+
+    .game-btn.secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);box-shadow:none;color:#eef4ff}
+
+    .game-btn.secondary:hover{background:rgba(255,255,255,.1)}
+
+    .game-canvas-wrap{padding:20px;background:linear-gradient(180deg, rgba(8,15,28,.95), rgba(6,11,20,.92))}
+
+    #hoopGameCanvas{display:block;width:100%;height:auto;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,#193a76 0%, #0d1f42 32%, #5a2b13 32%, #8b4c24 58%, #6a3617 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 20px 50px rgba(0,0,0,.24);touch-action:none}
+
+    .power-wrap{padding:0 20px 20px}
+
+    .power-head{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:13px;color:#cdd8eb;font-weight:800;margin-bottom:10px}
+
+    .power-bar{height:14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative}
+
+    .power-bar::before{content:"";position:absolute;left:68%;width:12%;top:0;bottom:0;background:rgba(34,197,94,.26)}
+
+    .power-fill{height:100%;width:0;background:linear-gradient(90deg,#60a5fa 0%, #fbbf24 58%, #22c55e 72%, #ef4444 100%);transition:width .06s linear}
+
+    .swipe-readout{display:flex;justify-content:space-between;gap:10px;color:#9fb1ce;font-size:12px;margin-top:10px}
+
+    .game-panel{padding:22px}
+
+    .game-panel h3{margin:10px 0 12px;font-size:24px}
+
+    .game-panel p{margin:0 0 14px;color:#d6dff0;line-height:1.75}
+
+    .game-list{display:grid;gap:12px;margin-top:14px}
+
+    .game-item{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+
+    .game-item strong{display:block;margin-bottom:6px}
+
+    .game-kbd{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 10px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-weight:900;font-size:13px}
+
+    .game-status{min-height:24px;color:#fed7aa;font-weight:900;letter-spacing:.2px}
+
+    .game-note{margin-top:16px;font-size:13px;color:var(--muted);line-height:1.7}
+
+    .status-good{color:#86efac}
+
+    @media (max-width:980px){
+
+      .game-shell{grid-template-columns:1fr}
+
+    }
+
+ 
+
+  </style>
+
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="wrap topbar-inner">
+
+      <div class="brand">
+
+        <div class="brand-badge">🏀</div>
+
+        <div>
+
+          Eric Li | NBA Elite HQ
+
+          <small>Ultimate single-file sports site with app-style navigation, real headshots, team filters and standings</small>
+
+        </div>
+
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+
+        <button class="nav-btn active" data-page="home">Home</button>
+
+        <button class="nav-btn" data-page="teams">Teams</button>
+
+        <button class="nav-btn" data-page="players">Players</button>
+
+        <button class="nav-btn" data-page="standings">Standings</button>
+
+        <button class="nav-btn" data-page="trades">Trades</button>
+
+        <button class="nav-btn" data-page="game">Minigame</button>
+
+      </nav>
+
+      <button class="cta" onclick="showPage('players')">📊 Open Player Hub</button>
+
+    </div>
+
+    <div class="ticker-wrap">
+
+      <div class="ticker">
+
+        <div class="ticker-item"><span class="dot"></span> Single-file architecture now powers full Home / Teams / Players / Standings / Trades sections</div>
+
+        <div class="ticker-item"><span class="dot"></span> Real player headshots and team logos replace emoji-only visuals</div>
+
+        <div class="ticker-item"><span class="dot"></span> Home page keeps the editorial hero, watch cards, stat rails and premium motion</div>
+
+        <div class="ticker-item"><span class="dot"></span> Teams and Players pages include browse/filter controls without leaving the file</div>
+
+        <div class="ticker-item"><span class="dot"></span> Standings and schedule modules give the site a real sports-network feel</div>
+
+        <div class="ticker-item"><span class="dot"></span> Single-file architecture now powers full Home / Teams / Players / Standings / Trades sections</div>
+
+        <div class="ticker-item"><span class="dot"></span> Real player headshots and team logos replace emoji-only visuals</div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+ 
+
+  <main class="wrap">
+
+    <section id="home" class="page active" aria-label="Home page">
+
+      <div class="grid-hero section">
+
+        <div class="glass hero-main">
+
+          <div class="orb one"></div>
+
+          <div class="orb two"></div>
+
+          <div class="eyebrow"><span class="dot"></span> Ultimate single-file version / polished ESPN-style layout</div>
+
+          <h1>Your NBA site now behaves like a real sports app.</h1>
+
+          <p>
+
+            This one-file build keeps everything in a single HTML document while still feeling like a full multi-page sports experience.
+
+            Navigation instantly switches between sections, content is cleanly structured, and the UI combines editorial hierarchy,
+
+            motion, filters, stats, standings and trade coverage in one polished shell.
+
+          </p>
+
+          <div class="hero-actions">
+
+            <button class="cta" onclick="showPage('teams')">Browse Teams →</button>
+
+            <button class="ghost" onclick="showPage('standings')">View Standings</button>
+
+          </div>
+
+          <div class="hero-stats">
+
+            <div class="hero-stat"><strong>6</strong><span>Structured sections inside one HTML file</span></div>
+
+            <div class="hero-stat"><strong>6</strong><span>Franchise cards with filters and logos</span></div>
+
+            <div class="hero-stat"><strong>8</strong><span>Featured players with static stat snapshots</span></div>
+
+            <div class="hero-stat"><strong>4</strong><span>Video-style highlight panels and editorial modules</span></div>
+
+          </div>
+
+          <div class="ball"><span></span><i></i></div>
+
+          <img class="runner" src=https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png alt="LeBron James running across the hero" />
+
+        </div>
+
+        <aside class="glass side-stack">
+
+          <div class="mini-spot" onclick="showPage('players')">
+
+            <img src=https://cdn.nba.com/headshots/nba/latest/1040x760/1629029.png alt="Luka Doncic" />
+
+            <div>
+
+              <div class="label">Player Hub</div>
+
+              <h3 style="margin:10px 0 8px">Search stars, compare stat lines, browse award-level production</h3>
+
+              <p style="margin:0;color:#cfd9ea;line-height:1.6">Real names and 2023–24 snapshot stat lines now live in a dedicated app-style page section.</p>
+
+            </div>
+
+          </div>
+
+          <div class="mini-spot" onclick="showPage('teams')">
+
+            <img src=https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg alt="Boston Celtics logo" />
+
+            <div>
+
+              <div class="label">Team Browser</div>
+
+              <h3 style="margin:10px 0 8px">Filter by franchise without leaving the file</h3>
+
+              <p style="margin:0;color:#cfd9ea;line-height:1.6">Readers can jump between Celtics, Nuggets, Bucks, Suns, Lakers and Spurs instantly.</p>
+
+            </div>
+
+          </div>
+
+          <div class="mini-spot" onclick="showPage('trades')">
+
+            <img src=https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png alt="Giannis Antetokounmpo" />
+
+            <div>
+
+              <div class="label">Trade Desk</div>
+
+              <h3 style="margin:10px 0 8px">Rumors, fits and roster needs get their own section</h3>
+
+              <p style="margin:0;color:#cfd9ea;line-height:1.6">The trade page brings a cleaner editorial desk feel with fit ratings and quick-hit analysis.</p>
+
+            </div>
+
+          </div>
+
+ 
+
+          <div class="mini-spot" onclick="showPage('game')">
+
+            <img src=https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg alt="Basketball arcade icon" />
+
+            <div>
+
+              <div class="label">Minigame</div>
+
+              <h3 style="margin:10px 0 8px">Play an easier hoop challenge right inside the site</h3>
+
+              <p style="margin:0;color:#cfd9ea;line-height:1.6">A cleaner arcade mode now includes an easier basket, power meter, swipe controls, crowd sounds and perfect-release feedback.</p>
+
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+ 
+
+      <div class="section">
+
+        <div class="section-head">
+
+          <div>
+
+            <h2>Watch-style Highlights</h2>
+
+            <p>Hero stories designed like featured videos, with cinematic overlays and click-through feeling.</p>
+
+          </div>
+
+          <button class="ghost" onclick="showPage('players')">Jump to players</button>
+
+        </div>
+
+        <div class="home-grid">
+
+          <article class="video-card" onclick="showPage('standings')">
+
+            <img src=https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png alt="Nikola Jokic" />
+
+            <div class="play">▶</div>
+
+            <div class="video-copy">
+
+              <div class="label">Lead Breakdown</div>
+
+              <h3>How elite offenses turn help into a losing equation</h3>
+
+              <p>Five-out spacing, smart short-roll reads and shooting gravity create impossible choices for defenses.</p>
+
+              <div class="video-meta"><span>Film Room</span><span>8:42</span></div>
+
+            </div>
+
+          </article>
+
+          <article class="video-card" onclick="showPage('players')">
+
+            <img src=https://cdn.nba.com/headshots/nba/latest/1040x760/1628983.png alt="Shai Gilgeous-Alexander" />
+
+            <div class="play">▶</div>
+
+            <div class="video-copy">
+
+              <div class="label">MVP Ladder</div>
+
+              <h3>Which stars are driving the award conversation?</h3>
+
+              <p>Usage, efficiency, playmaking burden and team results all matter in the final equation.</p>
+
+              <div class="video-meta"><span>Studio Segment</span><span>5:18</span></div>
+
+            </div>
+
+          </article>
+
+          <article class="video-card" onclick="showPage('trades')">
+
+            <img src=https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png alt="Kevin Durant" />
+
+            <div class="play">▶</div>
+
+            <div class="video-copy">
+
+              <div class="label">Trade Wire</div>
+
+              <h3>What contenders still need before the playoffs</h3>
+
+              <p>Switchable wings, bonus shooting and connective secondary creators still dominate the market.</p>
+
+              <div class="video-meta"><span>Daily Desk</span><span>4:29</span></div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+ 
+
+    <section id="teams" class="page" aria-label="Teams page">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>Teams</h2>
+
+          <p>Browse by franchise, filter the cards, and keep the app-like experience inside a single HTML file.</p>
+
+        </div>
+
+        <div class="controls" id="teamFilters"></div>
+
+      </div>
+
+      <div class="cards-3" id="teamGrid"></div>
+
+    </section>
+
+ 
+
+    <section id="players" class="page" aria-label="Players page">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>Players</h2>
+
+          <p>Search the player board and filter by category while staying in one polished front-end experience.</p>
+
+        </div>
+
+        <div class="controls">
+
+          <input id="playerSearch" class="search" type="search" placeholder="Search player or team..." aria-label="Search players" />
+
+          <div id="playerTabs" class="controls"></div>
+
+        </div>
+
+      </div>
+
+      <div class="cards-2" id="playerGrid"></div>
+
+      <div class="muted" style="margin-top:14px;font-size:13px;line-height:1.7">
+
+        Note: player stat cards use a fixed 2023–24 regular season snapshot for a polished static showcase rather than a live data feed.
+
+      </div>
+
+    </section>
+
+ 
+
+    <section id="standings" class="page" aria-label="Standings page">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>Standings + Scoreboard</h2>
+
+          <p>A real sports-network composition: conference tables on top, recent results and the upcoming slate beneath.</p>
+
+        </div>
+
+      </div>
+
+      <div class="layout-2 section">
+
+        <div class="panel">
+
+          <div class="label">Eastern Conference</div>
+
+          <div class="table-wrap"><table id="eastTable"></table></div>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="label">Western Conference</div>
+
+          <div class="table-wrap"><table id="westTable"></table></div>
+
+        </div>
+
+      </div>
+
+      <div class="schedule-grid section">
+
+        <div class="panel">
+
+          <div class="label">Recent Results</div>
+
+          <div id="resultsGrid" class="cards-2" style="grid-template-columns:1fr"></div>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="label">Upcoming Schedule</div>
+
+          <div id="scheduleGrid" class="cards-2" style="grid-template-columns:1fr"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+ 
+
+    <section id="trades" class="page" aria-label="Trades page">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>Trades</h2>
+
+          <p>Editorial trade cards, roster-fit labels, and a cleaner front-office desk aesthetic for the rumor cycle.</p>
+
+        </div>
+
+        <div class="controls" id="tradeTabs"></div>
+
+      </div>
+
+      <div class="cards-3" id="tradeGrid"></div>
+
+    </section>
+
+ 
+
+    <section id="game" class="page" aria-label="Basketball minigame page">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>Hoop Shot Challenge</h2>
+
+          <p>The basket is now closer and wider, with an arcade-style power meter, swipe controls, sound feedback and a green release bonus.</p>
+
+        </div>
+
+        <div class="controls">
+
+          <button class="ghost" onclick="startHoopGame()">Start Challenge</button>
+
+          <button class="ghost" onclick="resetHoopGame()">Reset Court</button>
+
+        </div>
+
+      </div>
+
+      <div class="game-shell section">
+
+        <div class="panel game-stage">
+
+          <div class="game-topbar">
+
+            <div class="game-hud" aria-live="polite">
+
+              <div class="hud-chip">Score <strong id="gameScore">0</strong></div>
+
+              <div class="hud-chip">Best <strong id="gameBest">0</strong></div>
+
+              <div class="hud-chip">Time <strong id="gameTimer">30</strong>s</div>
+
+              <div class="hud-chip">Streak <strong id="gameStreak">0</strong></div>
+
+              <div class="hud-chip good">Assist <strong>ON</strong></div>
+
+            </div>
+
+            <div class="game-actions">
+
+              <button class="game-btn" id="startGameBtn" type="button">Start</button>
+
+              <button class="game-btn secondary" id="shootGameBtn" type="button">Shoot</button>
+
+              <button class="game-btn secondary" id="resetGameBtn" type="button">Reset</button>
+
+              <button class="game-btn secondary" id="audioGameBtn" type="button">Sound: On</button>
+
+            </div>
+
+          </div>
+
+          <div class="game-canvas-wrap">
+
+            <canvas id="hoopGameCanvas" width="920" height="460" aria-label="Basketball hoop shooting minigame"></canvas>
+
+          </div>
+
+          <div class="power-wrap">
+
+            <div class="power-head">
+
+              <span>Release Power</span>
+
+              <span id="powerLabel">72%</span>
+
+            </div>
+
+            <div class="power-bar" aria-hidden="true"><div class="power-fill" id="powerFill"></div></div>
+
+            <div class="swipe-readout">
+
+              <span>Desktop: move your mouse or use ← → to aim</span>
+
+              <span>Mobile: drag on the court then release to shoot</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <aside class="panel game-panel">
+
+          <div class="label">Arcade Mode</div>
+
+          <h3>Now tuned to feel winnable</h3>
+
+          <p>This version is deliberately easier: the hoop sits closer to the shooter, the rim is wider, the ball travels with a friendlier arc, and an assist nudges close shots towards the centre of the basket.</p>
+
+          <div class="game-list">
+
+            <div class="game-item"><strong>Power meter</strong>Time the release in the green zone for a perfect shot boost. Perfect releases flash green and get extra help.</div>
+
+            <div class="game-item"><strong>Swipe support</strong>On touch devices, drag your finger to set both direction and strength, then release to launch.</div>
+
+            <div class="game-item"><strong>Audio feedback</strong>Simple built-in crowd and swish tones are included, and can be toggled off instantly.</div>
+
+          </div>
+
+          <div class="game-status" id="gameStatus">Press Start to begin your first run.</div>
+
+          <div class="game-note">Tip: the easiest path is to aim roughly centre-right and release when the power meter enters the green strip.</div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+ 
+
+  </main>
+
+ 
+
+  <footer>
+
+    <div class="wrap footer-inner">
+
+      <div>
+
+        <strong>© 2026 Eric Li — NBA Elite HQ</strong>
+
+        <div class="muted" style="margin-top:6px">Single HTML file, app-style section navigation, premium sports layout, real images, filters, standings and trade coverage.</div>
+
+      </div>
+
+      <div class="footer-links">
+
+        <a href="#" onclick="showPage('home');return false;">Home</a>
+
+        <a href="#" onclick="showPage('teams');return false;">Teams</a>
+
+        <a href="#" onclick="showPage('players');return false;">Players</a>
+
+        <a href="#" onclick="showPage('standings');return false;">Standings</a>
+
+        <a href="#" onclick="showPage('trades');return false;">Trades</a>
+
+        <a href="#" onclick="showPage('game');return false;">Minigame</a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+ 
+
+  <script>
+
+    const teams = [
+
+      {
+
+        key:'celtics', name:'Boston Celtics', logo:'https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg',
+
+        summary:'Two-way wing depth, five-out spacing and lineup continuity keep Boston in the title tier.',
+
+        chips:['64–18','Elite net rating'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png',
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/1627759.png'
+
+        ]
+
+      },
+
+      {
+
+        key:'nuggets', name:'Denver Nuggets', logo:'https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg',
+
+        summary:'Jokić-driven half-court precision and chemistry-heavy actions make Denver one of the smartest offenses in the league.',
+
+        chips:['57–25','Half-court machine'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png',
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/1627750.png'
+
+        ]
+
+      },
+
+      {
+
+        key:'bucks', name:'Milwaukee Bucks', logo:'https://cdn.nba.com/logos/nba/1610612749/primary/L/logo.svg',
+
+        summary:'Elite rim pressure and star power still define Milwaukee, with spacing and defensive balance shaping the ceiling.',
+
+        chips:['49–33','Paint pressure'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png',
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/203081.png'
+
+        ]
+
+      },
+
+      {
+
+        key:'suns', name:'Phoenix Suns', logo:'https://cdn.nba.com/logos/nba/1610612756/primary/L/logo.svg',
+
+        summary:'High-end shot making remains the Suns signature, while roster cohesion and defensive cover matter most.',
+
+        chips:['49–33','Elite scorers'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png',
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/1626164.png'
+
+        ]
+
+      },
+
+      {
+
+        key:'lakers', name:'Los Angeles Lakers', logo:'https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg',
+
+        summary:'Size, transition pressure and star-led shot creation keep the Lakers in every major spotlight.',
+
+        chips:['47–35','Always watched'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png',
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png'
+
+        ]
+
+      },
+
+      {
+
+        key:'spurs', name:'San Antonio Spurs', logo:'https://cdn.nba.com/logos/nba/1610612759/primary/L/logo.svg',
+
+        summary:'Wembanyama’s development changes the lens for everything the Spurs build next: spacing, setup passing and defensive range.',
+
+        chips:['Future core','Rising star'],
+
+        players:[
+
+          'https://cdn.nba.com/headshots/nba/latest/1040x760/1641705.png',
+
+          'https://cdn.nba.com/logos/nba/1610612759/primary/L/logo.svg'
+
+        ]
+
+      }
+
+    ];
+
+ 
+
+    const players = [
+
+      {name:'Luka Dončić', team:'Dallas Mavericks', kind:'MVP Watch', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/1629029.png', stats:['33.9 PPG','9.2 RPG','9.8 APG']},
+
+      {name:'Shai Gilgeous-Alexander', team:'Oklahoma City Thunder', kind:'MVP Watch', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/1628983.png', stats:['30.1 PPG','5.5 RPG','6.2 APG']},
+
+      {name:'Nikola Jokić', team:'Denver Nuggets', kind:'MVP Watch', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png', stats:['26.4 PPG','12.4 RPG','9.0 APG']},
+
+      {name:'Giannis Antetokounmpo', team:'Milwaukee Bucks', kind:'MVP Watch', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png', stats:['30.4 PPG','11.5 RPG','6.5 APG']},
+
+      {name:'Jayson Tatum', team:'Boston Celtics', kind:'Wing Star', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png', stats:['26.9 PPG','8.1 RPG','4.9 APG']},
+
+      {name:'Victor Wembanyama', team:'San Antonio Spurs', kind:'Rising Star', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/1641705.png', stats:['21.4 PPG','10.6 RPG','3.6 BPG']},
+
+      {name:'Kevin Durant', team:'Phoenix Suns', kind:'Scoring Star', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png', stats:['27.1 PPG','6.6 RPG','5.0 APG']},
+
+      {name:'LeBron James', team:'Los Angeles Lakers', kind:'Playmaking Star', img:'https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png', stats:['25.7 PPG','7.3 RPG','8.3 APG']}
+
+    ];
+
+ 
+
+    const eastStandings = [
+
+      ['Celtics','https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg',64,18,'.780'],
+
+      ['Knicks','https://cdn.nba.com/logos/nba/1610612752/primary/L/logo.svg',50,32,'.610'],
+
+      ['Bucks','https://cdn.nba.com/logos/nba/1610612749/primary/L/logo.svg',49,33,'.598'],
+
+      ['Cavaliers','https://cdn.nba.com/logos/nba/1610612739/primary/L/logo.svg',48,34,'.585'],
+
+      ['Magic','https://cdn.nba.com/logos/nba/1610612753/primary/L/logo.svg',47,35,'.573']
+
+    ];
+
+    const westStandings = [
+
+      ['Thunder','https://cdn.nba.com/logos/nba/1610612760/primary/L/logo.svg',57,25,'.695'],
+
+      ['Nuggets','https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg',57,25,'.695'],
+
+      ['Timberwolves','https://cdn.nba.com/logos/nba/1610612750/primary/L/logo.svg',56,26,'.683'],
+
+      ['Clippers','https://cdn.nba.com/logos/nba/1610612746/primary/L/logo.svg',51,31,'.622'],
+
+      ['Mavericks','https://cdn.nba.com/logos/nba/1610612742/primary/L/logo.svg',50,32,'.610']
+
+    ];
+
+ 
+
+    const recentResults = [
+
+      {home:'Celtics',homeLogo:'https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg',homeScore:118,away:'Bucks',awayLogo:'https://cdn.nba.com/logos/nba/1610612749/primary/L/logo.svg',awayScore:110,meta:['Final','TD Garden']},
+
+      {home:'Nuggets',homeLogo:'https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg',homeScore:112,away:'Suns',awayLogo:'https://cdn.nba.com/logos/nba/1610612756/primary/L/logo.svg',awayScore:106,meta:['Final','Ball Arena']},
+
+      {home:'Thunder',homeLogo:'https://cdn.nba.com/logos/nba/1610612760/primary/L/logo.svg',homeScore:123,away:'Lakers',awayLogo:'https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg',awayScore:120,meta:['Final','Paycom Center']}
+
+    ];
+
+    const upcomingGames = [
+
+      {home:'Nuggets',homeLogo:'https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg',away:'Celtics',awayLogo:'https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg',meta:['Tomorrow','8:30 PM ET']},
+
+      {home:'Suns',homeLogo:'https://cdn.nba.com/logos/nba/1610612756/primary/L/logo.svg',away:'Bucks',awayLogo:'https://cdn.nba.com/logos/nba/1610612749/primary/L/logo.svg',meta:['Tomorrow','10:00 PM ET']},
+
+      {home:'Spurs',homeLogo:'https://cdn.nba.com/logos/nba/1610612759/primary/L/logo.svg',away:'Lakers',awayLogo:'https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg',meta:['Fri','9:00 PM ET']}
+
+    ];
+
+ 
+
+    const trades = [
+
+      {type:'Rumor Heat', title:'Lakers still profile as a team that could use another two-way wing', body:'The cleanest fit remains a player who can defend size, hit catch-and-shoot looks, and keep the ball moving without needing heavy usage.', fit:82},
+
+      {type:'Roster Fit', title:'Suns could benefit from more connective role support', body:'With elite shot creation already in place, Phoenix gains the most from lineups that stabilize defense and keep the offense fluid around stars.', fit:74},
+
+      {type:'Contender Need', title:'Bucks still map neatly to playoff wing depth', body:'Milwaukee’s top-end talent is clear. The most valuable additions remain versatile defenders and steady spot-up contributors.', fit:78},
+
+      {type:'Front Office Lens', title:'Nuggets-style continuity is a reminder that fit can beat volume', body:'Not every contender needs a blockbuster move. Smaller additions that preserve roles and chemistry can create stronger playoff lineups.', fit:68},
+
+      {type:'Development Watch', title:'Spurs should keep prioritizing lineup fit around Wembanyama', body:'Spacing, short-roll passing support and defensive intelligence matter more than headline names for a roster this early in the build.', fit:72},
+
+      {type:'Market Theme', title:'Every buyer still wants the same archetypes', body:'Switchable wings, playoff shooting and bonus creation continue to dominate trade conversations because those are the first traits exposed in spring basketball.', fit:88}
+
+    ];
+
+ 
+
+    const teamGrid = document.getElementById('teamGrid');
+
+    const teamFilters = document.getElementById('teamFilters');
+
+    const playerGrid = document.getElementById('playerGrid');
+
+    const playerTabs = document.getElementById('playerTabs');
+
+    const tradeGrid = document.getElementById('tradeGrid');
+
+    const tradeTabs = document.getElementById('tradeTabs');
+
+ 
+
+    function showPage(pageId){
+
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+
+      const target = document.getElementById(pageId);
+
+      if(target) target.classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === pageId));
+
+      if(pageId === 'game' && typeof setGameStatus === 'function'){
+
+        setGameStatus('Arcade court ready — aim for the green release window.');
+
+      }
+
+      window.scrollTo({top:0,behavior:'smooth'});
+
+    }
+
+ 
+
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
+
+ 
+
+    function renderTeamFilters(){
+
+      const keys = ['all', ...teams.map(t => t.key)];
+
+      teamFilters.innerHTML = keys.map((key, i) => {
+
+        const label = key === 'all' ? 'All Teams' : teams.find(t => t.key === key).name.replace('Boston ','').replace('Denver ','').replace('Milwaukee ','').replace('Phoenix ','').replace('Los Angeles ','').replace('San Antonio ','');
+
+        return `<button class="filter-btn ${i===0?'active':''}" data-team="${key}">${label}</button>`;
+
+      }).join('');
+
+      teamFilters.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+
+        teamFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+        btn.classList.add('active');
+
+        renderTeams(btn.dataset.team);
+
+      }));
+
+    }
+
+ 
+
+    function renderTeams(filter='all'){
+
+      const filtered = filter === 'all' ? teams : teams.filter(t => t.key === filter);
+
+      teamGrid.innerHTML = filtered.map(team => `
+
+        <article class="team-card">
+
+          <div class="team-head">
+
+            <img src="${team.logo}" alt="${team.name} logo" />
+
+            <div>
+
+              <div class="label">Franchise</div>
+
+              <h3>${team.name}</h3>
+
+            </div>
+
+          </div>
+
+          <p>${team.summary}</p>
+
+          <div class="roster-strip">
+
+            ${team.players.map((player, idx) => `<img src="${player}" alt="${team.name} star ${idx + 1}" />`).join('')}
+
+            ${team.chips.map(chip => `<span class="chip">${chip}</span>`).join('')}
+
+          </div>
+
+        </article>
+
+      `).join('');
+
+    }
+
+ 
+
+    function renderPlayerTabs(){
+
+      const types = ['All', ...new Set(players.map(p => p.kind))];
+
+      playerTabs.innerHTML = types.map((type, i) => `<button class="chip-btn ${i===0?'active':''}" data-kind="${type}">${type}</button>`).join('');
+
+      playerTabs.querySelectorAll('.chip-btn').forEach(btn => btn.addEventListener('click', () => {
+
+        playerTabs.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+
+        btn.classList.add('active');
+
+        renderPlayers(document.getElementById('playerSearch').value, btn.dataset.kind);
+
+      }));
+
+    }
+
+ 
+
+    function renderPlayers(search='', kind='All'){
+
+      const q = search.trim().toLowerCase();
+
+      const filtered = players.filter(player => {
+
+        const matchesSearch = !q || `${player.name} ${player.team}`.toLowerCase().includes(q);
+
+        const matchesKind = kind === 'All' || player.kind === kind;
+
+        return matchesSearch && matchesKind;
+
+      });
+
+      playerGrid.innerHTML = filtered.map(player => `
+
+        <article class="player-card">
+
+          <img src="${player.img}" alt="${player.name}" />
+
+          <div>
+
+            <div class="label">${player.kind}</div>
+
+            <div class="player-name">${player.name}</div>
+
+            <div class="player-sub">${player.team}</div>
+
+            <div class="statline">${player.stats.map(stat => `<span>${stat}</span>`).join('')}</div>
+
+          </div>
+
+        </article>
+
+      `).join('')
